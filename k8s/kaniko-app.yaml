@@ -1,34 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: ejemplo-kaniko
- namespace: default
+     name: ejemplo-kaniko
+     namespace: default
 spec:
- replicas: 1
- selector:
- matchLabels:
- app: ejemplo-kaniko
- template:
- metadata:
- labels:
- app: ejemplo-kaniko
- spec:
- containers:
- - name: ejemplo-kaniko
- image: <your_dockerhub_user>/<dockerhub_image>:<tag> # reference the image you created in
-the previous step
- ports:
- - containerPort: 5000
+    replicas: 1
+    selector:
+        matchLabels:
+            app: ejemplo-kaniko
+    template:
+        metadata:
+            labels:
+                app: ejemplo-kaniko
+        spec:
+        containers:
+        - name: ejemplo-kaniko
+          image: karl476/ejemplo-kaniko:v1
+          ports:
+          - containerPort: 5000
+            
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
- name: ejemplo-kaniko-service
- namespace: default
+    name: ejemplo-kaniko-service
+    namespace: default
 spec:
- selector:
- app: ejemplo-kaniko
- ports:
- - port: 80
- targetPort: 5000
- type: LoadBalancer
+    selector:
+        app: ejemplo-kaniko
+    ports:
+        - port: 80
+          targetPort: 5000
+    type: LoadBalancer
